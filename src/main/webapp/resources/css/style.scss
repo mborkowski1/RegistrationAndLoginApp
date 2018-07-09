@@ -1,0 +1,45 @@
+@import "mixins";
+
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+form {
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 15px;
+  button {
+    margin-bottom: 15px;
+  }
+}
+
+#home {
+  text-align: center;
+  @include heading;
+  #links {
+    word-spacing: 30px;
+    h5 {
+      display: inline;
+    }
+  }
+}
+
+#welcome {
+  text-align: center;
+  @include heading;
+  table {
+    margin: 0 auto;
+    font-size: 20px;
+  }
+  h5 {
+    margin-top: 15px;
+  }
+}
