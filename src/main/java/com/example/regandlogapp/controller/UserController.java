@@ -17,14 +17,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserValidator userValidator;
+    private final UserCredentialValidator userCredentialValidator;
 
     @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private UserCredentialValidator userCredentialValidator;
+    public UserController(UserService userService, UserValidator userValidator, UserCredentialValidator userCredentialValidator) {
+        this.userService = userService;
+        this.userValidator = userValidator;
+        this.userCredentialValidator = userCredentialValidator;
+    }
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String homePage() {

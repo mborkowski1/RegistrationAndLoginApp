@@ -17,13 +17,12 @@ public class UserValidator implements Validator {
     private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-+]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})$";
     private static final String PASSWORD_PATTERN = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,32}";
 
-    private Pattern patternEmail;
-    private Matcher matcherEmail;
-    private Pattern patternPassword;
-    private Matcher matcherPassword;
+    private final UserService userService;
 
     @Autowired
-    private UserService userService;
+    public UserValidator(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -34,11 +33,11 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        patternEmail = Pattern.compile(EMAIL_PATTERN);
-        matcherEmail = patternEmail.matcher(user.getEmail());
+        Pattern patternEmail = Pattern.compile(EMAIL_PATTERN);
+        Matcher matcherEmail = patternEmail.matcher(user.getEmail());
 
-        patternPassword = Pattern.compile(PASSWORD_PATTERN);
-        matcherPassword = patternPassword.matcher(user.getPassword());
+        Pattern patternPassword = Pattern.compile(PASSWORD_PATTERN);
+        Matcher matcherPassword = patternPassword.matcher(user.getPassword());
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
         if (user.getUsername().length() < 2 || user.getUsername().length() > 32)
